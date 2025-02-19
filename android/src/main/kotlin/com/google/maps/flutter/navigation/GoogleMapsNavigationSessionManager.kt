@@ -142,7 +142,9 @@ private constructor(private val navigationSessionEventApi: NavigationSessionEven
 
   /** Clean up activity reference to prevent memory leaks. */
   fun onActivityDestroyed() {
-    unregisterListeners()
+    if (navigator != null) {
+      unregisterListeners()
+    }
     weakActivity?.clear()
     weakActivity = null
     weakLifecycleOwner?.clear()
