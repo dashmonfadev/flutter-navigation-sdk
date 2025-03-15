@@ -69,6 +69,7 @@ dependencies {
   # Set platform to 15.0 to enable latest Google Maps SDK
   platform :ios, '15.0'
 ```
+3. In Xcode open Info.plist file and add `App registers for location updates` to the list of `Required background modes`
 
 ### Set Google Maps API Key
 
@@ -121,7 +122,7 @@ class _NavigationSampleState extends State<NavigationSample> {
       );
     }
     // Note: make sure user has also granted location permissions before starting navigation session.
-    await GoogleMapsNavigator.initializeNavigationSession();
+    await GoogleMapsNavigator.initializeNavigationSession(taskRemovedBehavior: TaskRemovedBehavior.continueService);
     setState(() {
       _navigationSessionInitialized = true;
     });
@@ -156,6 +157,15 @@ class _NavigationSampleState extends State<NavigationSample> {
   }
 }
 ```
+
+#### Task Removed Behavior
+
+The `taskRemovedBehavior` parameter of navigation session initialization defines how the navigation should behave when a task is removed from the recent apps list on Android. It can either:
+
+ - `TaskRemovedBehavior.continueService`: Continue running in the background. (default)
+ - `TaskRemovedBehavior.quitService`: Shut down immediately.
+
+This parameter has only an effect on Android.
 
 ### Add a map view
 
